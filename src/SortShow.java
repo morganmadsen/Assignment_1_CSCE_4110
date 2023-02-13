@@ -5,6 +5,13 @@
 
 //importing the libraries that will be needed in this program
 
+
+/*
+	Bryce- Bubble, Merge, Quick
+	Morgan- Insertion, Shell, Selection
+
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Calendar;
@@ -13,7 +20,6 @@ import java.util.Random;
 //The class that has all the sorts in it
 public class SortShow extends JPanel { 
 
-	
 		// An array to hold the lines_lengths to be sorted
 		public int[] lines_lengths;
 		//The amount of lines needed
@@ -234,6 +240,24 @@ public class SortShow extends JPanel {
 		// Copy the result back into the original array
 		for (index = first; index <= last; index++)
 			lines_lengths[index] = tempArray[index];
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////
+
+	// Bubble Sort
+
+	public void bubble_sort()
+	{
+		//getting the date and time when the iterative merge sort starts
+		Calendar start = Calendar.getInstance();
+
+		for(int i = 0; i < total_number_of_lines; ++i)
+		{
+			for(int j = 0; j < total_number_of_lines; ++j)
+			{
+
+			}
+		}
 	}
 
 	//////////////////////////////////////////////////////////////////////	
