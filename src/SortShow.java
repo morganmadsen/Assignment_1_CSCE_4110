@@ -87,6 +87,29 @@ public class SortShow extends JPanel {
 			//subtracting the end time with the start time
 	        SortGUI.selectionTime = end.getTime().getTime() - start.getTime().getTime();
 		}
+		public void InsertionSort()
+		{
+			//getting the date and time when the selection sort starts
+			Calendar start = Calendar.getInstance();
+
+			//getting the date and time when the selection sort ends
+			Calendar end = Calendar.getInstance();
+
+			//subtracting the end time with the start time
+			SortGUI.insertionTime = end.getTime().getTime() - start.getTime().getTime();
+		}
+
+		public void ShellSort()
+		{
+			//getting the date and time when the selection sort starts
+			Calendar start = Calendar.getInstance();
+
+			//getting the date and time when the selection sort ends
+			Calendar end = Calendar.getInstance();
+
+			//subtracting the end time with the start time
+			SortGUI.shellTime = end.getTime().getTime() - start.getTime().getTime();
+		}
 		
 		//this method gets the smallest element in the array of lines_lengths
 		public int getIndexOfSmallest(int first, int last){
