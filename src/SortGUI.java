@@ -25,6 +25,12 @@ public class SortGUI {
 	public static double insertionTime = 0.0;
 	//a variable that holds the amount of time for the shell merge sort takes to execute
 	public static double shellTime = 0.0;
+	// a variable that holds the amount of time for the bubble sort takes to execute
+	public static double bubbleTime = 0.0;
+	// a variable that holds the amount of time for the Merge sort takes to execute
+	public static double mergeTime = 0.0;
+	// a variable that holds the amount of time for the quick sort takes to execute
+	public static double quickTime = 0.0;
 	//Boolean variable that is made to keep track whether or not the selection sort has already been used
 	public boolean Selection_Done = false;
 	//Boolean variable that is made to keep track whether or not the recursive merge sort has already been used
@@ -35,6 +41,13 @@ public class SortGUI {
 	public boolean Insertion_Done = false;
 	//Boolean variable that is made to keep track whether or not the shell sort has already been used
 	public boolean Shell_Done = false;
+	//Boolean variable that is made to keep track whether or not the bubble sort has already been used
+	public boolean Bubble_Done = false;
+	//Boolean variable that is made to keep track whether or not the merge sort has already been used
+	public boolean Merge_Done = false;
+	//Boolean variable that is made to keep track whether or not the quick sort has already been used
+	public boolean Quick_Done = false;
+
 	//Making a object from the class SortShow
 	SortShow sortArea = new SortShow();
 	
@@ -69,10 +82,16 @@ public class SortGUI {
 		//making an insertion button with a text "Insertion" on it
 		JRadioButton shell = new JRadioButton("Shell");
 		//making an shell button with a text "Shell" on it
+		JRadioButton bubble = new JRadioButton("Bubble");
+		//making an bubble button with a text "Merge" on it
+		JRadioButton merge = new JRadioButton("Merge");
+		//making an merge button with a text "Merge" on it
+		JRadioButton quick = new JRadioButton("Quick");
+		//making an quick button with a text "Quick" on it
 		JRadioButton reset = new JRadioButton("Reset");
-		//A label that displays the time it took for the Selection sort took to execute 
+		//A label that displays the time it took for the Selection sort took to execute
 		JLabel selection_time_label = new JLabel("Selection Time");
-		JLabel selection_time_taken = new JLabel(""); 
+		JLabel selection_time_taken = new JLabel("");
 		//A label that displays the time it took for the recursive merge sort took to execute 
 		JLabel rmerge_time_label = new JLabel("Merge-Rec Time");
 		JLabel rmerge_time_taken = new JLabel("");
@@ -85,7 +104,17 @@ public class SortGUI {
 		JLabel shell_time_label = new JLabel("Shell Time");
 		JLabel shell_time_taken = new JLabel("");
 		//A label that displays the time it took for the shell sort took to execute
-	
+
+		JLabel bubble_time_label = new JLabel("Bubble Time");
+		JLabel bubble_time_taken = new JLabel("");
+		//A label that displays the time it took for the bubble sort took to execute
+		JLabel merge_time_label = new JLabel("Merge Time");
+		JLabel merge_time_taken = new JLabel("");
+		//A label that displays the time it took for the merge sort took to execute
+		JLabel quick_time_label = new JLabel("Quick Time");
+		JLabel quick_time_taken = new JLabel("");
+		//A label that displays the time it took for the quick sort took to execute
+
 		//the default constructor for the class MyScreen
 		public MyScreen() {
 			// Panel where sorted lines_lengths will displayed
@@ -99,6 +128,12 @@ public class SortGUI {
 			insertion_time_taken.setForeground(Color.RED);
 			//The time displayed for shell sort will be the color red
 			shell_time_taken.setForeground(Color.RED);
+			//The time displayed for bubble sort will be the color red
+			bubble_time_taken.setForeground(Color.RED);
+			//The time displayed for merge sort will be the color red
+			merge_time_taken.setForeground(Color.RED);
+			//The time displayed for quick sort will be the color red
+			quick_time_taken.setForeground(Color.RED);
 			//The selection button text will be the colour blue
 			selection.setForeground(Color.BLUE);
 			//The recursive merge button text will be the colour blue
@@ -243,6 +278,7 @@ public class SortGUI {
 				}
 			});
 
+			//Creating an action listener for shell button
 			shell.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//Sorting the array in the shell sort method
@@ -251,6 +287,48 @@ public class SortGUI {
 					shell_time_taken.setText((shellTime / 1000) + " Seconds");
 					//shell sort has finished/been clicked
 					Shell_Done = true;
+					//setting all booleans false except for reset
+					Set_Available_Chooses(false, false, false, false, false, true);
+				}
+			});
+
+			//Creating an action listener for bubble button selection
+			bubble.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//Sorting the array in the bubble sort method
+					sortArea.BubbleSort();
+					//The amount of time taken for bubble sort took
+					bubble_time_taken.setText((bubbleTime / 1000) + " Seconds");
+					//bubble sort has finished/been clicked
+					Bubble_Done = true;
+					//setting all booleans false except for reset
+					Set_Available_Chooses(false, false, false, false, false, true);
+				}
+			});
+
+			//Creating an action listener for merge button selection
+			merge.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//Sorting the array in the merge sort method
+					sortArea.MergeSort();
+					//The amount of time taken for merge sort took
+					merge_time_taken.setText((mergeTime / 1000) + " Seconds");
+					//merge sort has finished/been clicked
+					Merge_Done = true;
+					//setting all booleans false except for reset
+					Set_Available_Chooses(false, false, false, false, false, true);
+				}
+			});
+
+			//Creating an action listener for quick button selection
+			quick.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//Sorting the array in the quick sort method
+					sortArea.QuickSort();
+					//The amount of time taken for quick sort took
+					quick_time_taken.setText((quickTime / 1000) + " Seconds");
+					//quick sort has finished/been clicked
+					Quick_Done = true;
 					//setting all booleans false except for reset
 					Set_Available_Chooses(false, false, false, false, false, true);
 				}
@@ -267,7 +345,7 @@ public class SortGUI {
 					//There are many different combinations of what could be clicked 
 					//The following code below covers all possibilities
 					//FOr the following use the same comments as above 
-					if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done && Insertion_Done && Shell_Done) {
+					if (Selection_Done && Recersive_Merge_Done && Iterative_Merge_Done && Insertion_Done && Shell_Done && Bubble_Done && Merge_Done && Quick_Done) {
 						//
 						scramble_button.setEnabled(true);
 						Recersive_Merge_Done = false;
@@ -275,6 +353,9 @@ public class SortGUI {
 						Selection_Done = false;
 						Insertion_Done = false;
 						Shell_Done = false;
+						Bubble_Done = false;
+						Merge_Done = false;
+						Quick_Done = false;
 						Set_Available_Chooses(false, false, false, false, false, false);
 						selection_time_taken.setText("");
 						rmerge_time_taken.setText("");
@@ -386,13 +467,15 @@ public class SortGUI {
 		}
 
 		//A method that sets if the button are enabled or disabled
-		public void Set_Available_Chooses(boolean selection_state, boolean rmerge_state, boolean imerge_state,boolean insertion_state, boolean shell_state,
+		public void Set_Available_Chooses(boolean selection_state, boolean rmerge_state, boolean imerge_state,boolean insertion_state, boolean shell_state, boolean bubble_state, boolean quick_state,
 				boolean reset_state) {
 			this.selection.setEnabled(selection_state);
 			this.rmerge.setEnabled(rmerge_state);
 			this.imerge.setEnabled(imerge_state);
 			this.insertion.setEnabled(insertion_state);
 			this.shell.setEnabled(shell_state);
+			this.bubble.setEnabled(bubble_state);
+			this.quick.setEnabled(quick_state);
 			this.reset.setEnabled(reset_state);
 		}
 	}

@@ -5,7 +5,6 @@
 
 //importing the libraries that will be needed in this program
 
-
 /*
 	Bryce- Bubble, Merge, Quick
 	Morgan- Insertion, Shell, Selection
@@ -113,10 +112,20 @@ public class SortShow extends JPanel {
 		
 		//this method gets the smallest element in the array of lines_lengths
 		public int getIndexOfSmallest(int first, int last){
-
-			//You need to complete this part.
-
-			return 1; //modify this line
+			//The index of the smallest element
+			int index_of_smallest = first;
+			//Going through the array of lines_lengths
+			for (int index = first + 1; index < last; index++)
+			{
+				//If the element at index is less than the element at index_of_smallest
+				if (lines_lengths[index] < lines_lengths[index_of_smallest])
+				{
+					//assigning the index to index_of_smallest
+					index_of_smallest = index;
+				}
+			}
+			//returning the index of the smallest element
+			return index_of_smallest;
 		}
 		
 	///////////////////////////////////////////////////////////////////////////////////
@@ -177,7 +186,7 @@ public class SortShow extends JPanel {
 			{
 			I_Merge(beginLeftovers, endSegment, total_number_of_lines - 1);
 			}
-		} 
+		}
 
 		// merge the sorted leftovers with the rest of the sorted array
 		if (beginLeftovers < total_number_of_lines) {
@@ -188,7 +197,7 @@ public class SortShow extends JPanel {
 		//getting the time it took for the iterative merge sort to execute 
 		//subtracting the end time with the start time
 	    SortGUI.imergeTime = end.getTime().getTime() - start.getTime().getTime();
-	} 
+	}
 
 	// Merges segments pairs (certain length) within an array 
 	public int I_MergeSegmentPairs(int l, int segmentLength)
@@ -274,13 +283,27 @@ public class SortShow extends JPanel {
 		//getting the date and time when the iterative merge sort starts
 		Calendar start = Calendar.getInstance();
 
+
+		tempArray = new int[total_number_of_lines];
+
 		for(int i = 0; i < total_number_of_lines; ++i)
 		{
 			for(int j = 0; j < total_number_of_lines; ++j)
 			{
-
+				if(lines_lengths[i] < lines_lengths[j])
+				{
+					tempArray[i] = lines_lengths[i];
+					lines_lengths[i] = lines_lengths[j];
+					lines_lengths[j] = tempArray[i];
+				}
 			}
 		}
+		//getting the date and time when the iterative merge sort ends
+		Calendar end = Calendar.getInstance();
+
+		//getting the time it took for the iterative merge sort to execute
+		//subtracting the end time with the start time
+		SortGUI.bubbleTime = end.getTime().getTime() - start.getTime().getTime();
 	}
 
 	//////////////////////////////////////////////////////////////////////	
