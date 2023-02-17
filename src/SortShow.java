@@ -174,86 +174,72 @@ public class SortShow extends JPanel {
 	///////////////////////////////////////////////////////////////////////////////////
 		
 		//recursive merge sort method
-		public void R_MergeSort()
-		{
+		public void R_MergeSort(){
 			//getting the date and time when the recursive merge sort starts
 			Calendar start = Calendar.getInstance();
 			//assigning the size for the tempArray below
-
+			R_Merge_Sort(lines_lengths, 0, total_number_of_lines - 1);
 			//You need to complete this part.
-
-			if(total_number_of_lines > 1)
-			{
-				//splitting the array into two halves
-				int[] left = new int[total_number_of_lines / 2];
-				int[] right = new int[total_number_of_lines - left.length];
-				System.arraycopy(lines_lengths, 0, left, 0, left.length);
-				System.arraycopy(lines_lengths, left.length, right, 0, right.length);
-				//sort the left half
-				R_MergeSort(left);
-				//sort the right half
-				R_MergeSort(right);
-				//merge the left and right halves
-				R_Merge(left, right);
-				//paint the lines
-				paintComponent(this.getGraphics());
-				delay(10);
-			}
-
-
 			Calendar end = Calendar.getInstance();
 			//getting the time it took for the iterative merge sort to execute
 			//subtracting the end time with the start time
 	        SortGUI.rmergeTime = end.getTime().getTime() - start.getTime().getTime();
 			
 		}
+		
+		//recursive merge sort method
 
-		public void R_MergeSort(int[] lines_lengths) {
-			//getting the date and time when the recursive merge sort starts
-			Calendar start = Calendar.getInstance();
-			//assigning the size for the tempArray below
+	public void R_Merge_Sort(int[] a, int low, int high)
+	{
+		if (high <= low) return;
 
-			//You need to complete this part.
+		int mid = (low + high)/2;
+		R_Merge_Sort(a, low, mid);
+		R_Merge_Sort(a, mid+1, high);
+		R_Merge(a, low, mid, high);
+	}
+		public void R_Merge(int[] a, int low, int mid, int high)
+		{
+			int leftA[] = new int[mid - low + 1];
+			int rightA[] = new int[high - mid];
 
-			if (lines_lengths.length > 1) {
-				//splitting the array into two halves
-				int[] left = new int[lines_lengths.length / 2];
-				int[] right = new int[lines_lengths.length - left.length];
-				System.arraycopy(lines_lengths, 0, left, 0, left.length);
-				System.arraycopy(lines_lengths, left.length, right, 0, right.length);
-				//sort the left half
-				R_MergeSort(left);
-				//sort the right half
-				R_MergeSort(right);
-				//merge the left and right halves
-				R_Merge(left, right);
-				//paint the lines
+			for (int i = 0; i < leftA.length; i++)
+			{
+				leftA[i] = a[low + i];
+			}
+			for (int i = 0; i < rightA.length; i++)
+			{
+				rightA[i] = a[mid + i + 1];
+			}
+
+			int lIndex = 0;
+			int rIndex = 0;
+
+			for (int i = low; i < high + 1; i++) {
+				if (lIndex < leftA.length && rIndex < rightA.length) {
+					if (leftA[lIndex] < rightA[rIndex]) {
+						a[i] = leftA[lIndex];
+						lIndex++;
+					} else {
+						a[i] = rightA[rIndex];
+						rIndex++;
+					}
+				} else if (lIndex < leftA.length)
+				{
+					a[i] = leftA[lIndex];
+					lIndex++;
+				}
+				 else if (rIndex < rightA.length)
+				{
+					a[i] = rightA[rIndex];
+					rIndex++;
+				}
+				//redrawing the lines_lengths
 				paintComponent(this.getGraphics());
+				//Causing a delay for 10ms
 				delay(10);
 			}
 		}
-
-		public void R_Merge(int[] left, int[] right)
-		{
-			//getting the date and time when the recursive merge sort starts
-			Calendar start = Calendar.getInstance();
-			//assigning the size for the tempArray below
-
-			int i1 = 0;
-			int i2 = 0;
-			for (int i = 0; i < lines_lengths.length; i++) {
-				if (i2 >= right.length || (i1 < left.length && left[i1] <= right[i2])) {
-					lines_lengths[i] = left[i1];
-					i1++;
-				} else {
-					lines_lengths[i] = right[i2];
-					i2++;
-				}
-			}
-		}
-
-		
-		//recursive merge sort method
 
 		
 		//recursive merge sort method
