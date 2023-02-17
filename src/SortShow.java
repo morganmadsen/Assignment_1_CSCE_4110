@@ -1,9 +1,11 @@
 /**
  *
- * @author Ouda
+ * @author Morgan
+ * @author Bryce
  */
 
 //importing the libraries that will be needed in this program
+
 
 /*
 	Bryce- Bubble, Merge, Quick
@@ -22,7 +24,7 @@ public class SortShow extends JPanel {
 		// An array to hold the lines_lengths to be sorted
 		public int[] lines_lengths;
 		//The amount of lines needed
-		public final int total_number_of_lines = 256;
+		public final int total_number_of_lines = 64;
 		 // An array to holds the scrambled lines_lengths
 		public int[] scramble_lines;
 		//A temp Array that is used later for sorts
@@ -72,13 +74,32 @@ public class SortShow extends JPanel {
 			lines_lengths[j] = temp;
 		}
 		
-		//The selectionSort method
+		//The SelectionSort method
+		//Morgan Madsen
 		public void SelectionSort(){
 			//getting the date and time when the selection sort starts
 			Calendar start = Calendar.getInstance();
 			//Using the selection sort to lines_lengths sort the array
 
 			//You need to complete this part.
+			//iterate through array
+			for (int i = 0; i < total_number_of_lines -1; i++)
+			{
+				//holds the index of the shortest line in the array
+				int min_index = i;
+				for (int j = i + 1; j < total_number_of_lines; j++)
+				{
+					if (lines_lengths[j] < lines_lengths[min_index])
+					{
+						min_index = j;
+					}
+				}
+				swap(min_index, i);
+				//paint the lines
+				paintComponent(this.getGraphics());
+				delay(10);
+			}
+			//saving the value of total_number_of_lines
 
 			//getting the date and time when the selection sort ends
 			Calendar end = Calendar.getInstance();
@@ -86,10 +107,30 @@ public class SortShow extends JPanel {
 			//subtracting the end time with the start time
 	        SortGUI.selectionTime = end.getTime().getTime() - start.getTime().getTime();
 		}
+
+		//Morgan Madsen
 		public void InsertionSort()
 		{
 			//getting the date and time when the selection sort starts
 			Calendar start = Calendar.getInstance();
+
+			for (int i = 1; i < total_number_of_lines; ++i)
+			{
+				int key = lines_lengths[i];
+				int j = i -1;
+				//if current line is longer than key line, move up one spot
+				while (j >= 0 && lines_lengths[j] > key)
+				{
+					lines_lengths[j + 1] = lines_lengths[j];
+					j = j -1;
+				}
+				//change key line
+				lines_lengths[j + 1] = key;
+
+				//paint lines
+				paintComponent(this.getGraphics());
+				delay(10);
+			}
 
 			//getting the date and time when the selection sort ends
 			Calendar end = Calendar.getInstance();
@@ -98,34 +139,36 @@ public class SortShow extends JPanel {
 			SortGUI.insertionTime = end.getTime().getTime() - start.getTime().getTime();
 		}
 
+		//Morgan Madsen
 		public void ShellSort()
 		{
-			//getting the date and time when the selection sort starts
+			//getting the date and time when the shell sort starts
 			Calendar start = Calendar.getInstance();
 
-			//getting the date and time when the selection sort ends
+			//start the sort with a large space, the close the space
+			for (int space = total_number_of_lines/2; space > 0; space/=2)
+			{
+				for (int i = space; i < total_number_of_lines; i += 1)
+				{
+					//add lines_lengths[i] to sorted elements and then make a hole at i
+					int temp = lines_lengths[i];
+					//shift sorted elements up until lines_lengths[i] is found
+					int j;
+					for (j = i; j >= space && lines_lengths[j - space] > temp; j -= space)
+					{
+						lines_lengths[j] = lines_lengths[j - space];
+					}
+					//put the temp back in its correct position
+					lines_lengths[j] = temp;
+					paintComponent(this.getGraphics());
+					delay(10);
+				}
+			}
+			//getting the date and time when the shell sort ends
 			Calendar end = Calendar.getInstance();
 
 			//subtracting the end time with the start time
 			SortGUI.shellTime = end.getTime().getTime() - start.getTime().getTime();
-		}
-		
-		//this method gets the smallest element in the array of lines_lengths
-		public int getIndexOfSmallest(int first, int last){
-			//The index of the smallest element
-			int index_of_smallest = first;
-			//Going through the array of lines_lengths
-			for (int index = first + 1; index < last; index++)
-			{
-				//If the element at index is less than the element at index_of_smallest
-				if (lines_lengths[index] < lines_lengths[index_of_smallest])
-				{
-					//assigning the index to index_of_smallest
-					index_of_smallest = index;
-				}
-			}
-			//returning the index of the smallest element
-			return index_of_smallest;
 		}
 		
 	///////////////////////////////////////////////////////////////////////////////////
@@ -145,25 +188,9 @@ public class SortShow extends JPanel {
 		}
 		
 		//recursive merge sort method
-		public void R_MergeSort(int first, int last){
-			if(first < last){
-
-				//You need to complete this part.
-
-				//Causing a delay for 10ms
-				delay(10); 
-			}
-		}
 
 		
 		//recursive merge sort method
-		public void R_Merge(int first, int mid, int last){
-
-			//You need to complete this part.
-				
-		}
-		
-		//
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -186,7 +213,7 @@ public class SortShow extends JPanel {
 			{
 			I_Merge(beginLeftovers, endSegment, total_number_of_lines - 1);
 			}
-		}
+		} 
 
 		// merge the sorted leftovers with the rest of the sorted array
 		if (beginLeftovers < total_number_of_lines) {
@@ -197,7 +224,7 @@ public class SortShow extends JPanel {
 		//getting the time it took for the iterative merge sort to execute 
 		//subtracting the end time with the start time
 	    SortGUI.imergeTime = end.getTime().getTime() - start.getTime().getTime();
-	}
+	} 
 
 	// Merges segments pairs (certain length) within an array 
 	public int I_MergeSegmentPairs(int l, int segmentLength)
@@ -277,35 +304,48 @@ public class SortShow extends JPanel {
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	// Bubble Sort
-
-	public void bubble_sort()
+	//Morgan Madsen
+	public void BubbleSort()
 	{
-		//getting the date and time when the iterative merge sort starts
+		//getting the date and time when the bubble sort starts
 		Calendar start = Calendar.getInstance();
+		//Using the selection sort to lines_lengths sort the array
 
-
-		tempArray = new int[total_number_of_lines];
-
-		for(int i = 0; i < total_number_of_lines; ++i)
+		//You need to complete this part.
+		//iterate through array
+		for (int i = 0; i < total_number_of_lines -1; i++)
 		{
-			for(int j = 0; j < total_number_of_lines; ++j)
+			int j;
+			for (j = 0; j < total_number_of_lines -i -1; j++)
 			{
-				if(lines_lengths[i] < lines_lengths[j])
+				if (lines_lengths[j] > lines_lengths[j + 1])
 				{
-					tempArray[i] = lines_lengths[i];
-					lines_lengths[i] = lines_lengths[j];
-					lines_lengths[j] = tempArray[i];
+					//swap lines_length[j+1] and lines_length[j]
+					swap(j, j+1);
 				}
 			}
+			//paint the lines
+			paintComponent(this.getGraphics());
+			delay(10);
 		}
-		//getting the date and time when the iterative merge sort ends
-		Calendar end = Calendar.getInstance();
+		//saving the value of total_number_of_lines
 
-		//getting the time it took for the iterative merge sort to execute
+		//getting the date and time when the bubble sort ends
+		Calendar end = Calendar.getInstance();
+		//getting the time it took for the selection sort to execute
 		//subtracting the end time with the start time
 		SortGUI.bubbleTime = end.getTime().getTime() - start.getTime().getTime();
 	}
 
+	public void QuickSort()
+	{
+		//getting the date and time when the quick sort starts
+		Calendar start = Calendar.getInstance();
+
+		Calendar end = Calendar.getInstance();
+		SortGUI.bubbleTime = end.getTime().getTime() - start.getTime().getTime();
+	}
+	
 	//////////////////////////////////////////////////////////////////////	
 		
 		//This method resets the window to the scrambled lines display
@@ -362,4 +402,6 @@ public class SortShow extends JPanel {
 		}
 		
 	}
+
+
 
